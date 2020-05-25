@@ -1,0 +1,66 @@
+#pcStats{
+  display: block;
+  height: 600px;
+}
+
+.background path {
+  font-size: 20px;
+    fill: none;
+    stroke: white;
+    stroke-width: 1px;
+    pointer-events: stroke;
+  }
+  
+  .foreground path {
+    font-size: 20px;
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+  
+  .axis .title {
+    fill:white;
+    font-size: 15px;
+    stroke: white;    
+    transform: rotate(-20deg);
+  }
+
+  .axis text{
+    fill: white;
+  }
+
+  .axis line,
+  .axis path.domain {
+    fill: none;
+    stroke: white;
+    shape-rendering: crispEdges;
+  }
+  
+ /* .string {
+    font-size: 6px;
+    fill:white;
+  }
+  .number {
+    font-size: 6px;
+    fill:white;
+  } */
+  
+  .label {
+    -webkit-transition: fill white 125ms linear;
+  }
+  
+  .active .label:not(.inactive) {
+    font-weight: bold;
+    font-size: 11px;
+    fill:white;
+  }
+  
+  .label.inactive {
+    fill:#ccc;
+  }
+  
+  .foreground path.inactive {
+    stroke: #ccc;
+    stroke-opacity: .5;
+    stroke-width: 1px;
+  }

@@ -1,0 +1,83 @@
+#barChart{
+  display: block;
+  width: inherit;
+}
+
+.drop-shadow {
+  -webkit-box-shadow: 0 0 5px 2px grey;
+  box-shadow: 0 0 5px 2px grey;
+}
+
+.names {
+  fill: none;
+  stroke: #fff;
+  stroke-linejoin: round;
+  }
+
+  .container {
+    width: 100%;
+    height: 200px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0px;
+    }
+    .column1 {
+    width: 15%;
+    height: 200px;
+    float: left;
+    }
+    .column2 {
+        margin-left: 45%;
+        height: 200px;        
+    }
+    .column3{
+      width: 100%;
+      height: 200px;
+      float:left;
+    }
+        
+/*  for bar chart */
+    .bar {
+      fill: #08519C;
+    }
+    .axis path,
+    .axis line {
+      fill: white;
+      stroke: #D4D8DA;
+      stroke-width: 1px;
+      shape-rendering: crispEdges;
+    }
+    .line{
+      stroke: white;
+    }
+    .x path {
+      stroke: #D4D8DA;
+      display: none;
+    }
+    .toolTip {
+      position: absolute;
+      display: none;
+      min-width: 80px;
+      height: auto;
+      background: none repeat scroll 0 0 #ffffff;
+      border: 1px solid #6F257F;
+      padding: 14px;
+      text-align: center;
+    }
+    .y-axis{
+      font-size: 12px;
+      stroke: white;
+      font-style: normal;
+
+    }
+
+    .x-axis{
+      font-size: 12px;
+      stroke: white;
+      font-style: normal;
+
+    }
+
+  .col-lg-3{
+    /* padding: 0px !important; */
+  }

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Visualization Final Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="../static/styles/materialize.min.css"> -->
+
+    <script src="{{ url_for('static', filename='js/d3.v4.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-2.2.4.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/queue.v1.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/d3-tip.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/topojson.v1.min.js')}}"></script>
+            
+    <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='styles/button.css')}}" />
+    <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='styles/main.css')}}" />
+    <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='styles/d3-tip.css')}}" />
+    <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='styles/parallel.css')}}" />
+    <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='styles/donut.css')}}" />
+    <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='styles/map.css')}}" />
+
+    <script src="{{ url_for('static', filename='js/parallel.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/worldMap.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/barChart.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/donut.js')}}"></script>
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+months = [1,2,3,4,5];
+var list = document.getElementById("months");
+var text = document.createElement("p");
+var node = document.createTextNode("Select Month");
+text.style.fontSize = "15px";
+text.style.fontWeight = "bold";
+text.style.display="inline-block";
+text.style.color="white";
+text.appendChild(node);
+list.appendChild(text);
+var selectList = document.createElement("select");
+selectList.id = "monthList";
+selectList.style.marginLeft="20px";
+selectList.style.borderRadius="5px";
+selectList.addEventListener("change",onListOptionChange);
+list.appendChild(selectList);
+
+
+attributeJson={
+  "location":"location",
+  "total_cases": "Total Cases",
+  "total_deaths": "Total Deaths",
+  "total_cases_per_million": "Total Cases/M",
+  "total_deaths_per_million": "Total Deaths/M",
+  "population": "Population",
+  "population_density": "Population Density",
+  "median_age": "Median Age",
+  "cvd_death_rate":"Covid Death Rate",
+  "gdp_per_capita":"GDP Per Capita",
+  "continent": "Continent",
+  "month": "Month"
+};
+
+for(var i=-1;i<5;i++){
+  option = document.createElement("option");
+  option.value = i;
+  if(i==-1)
+  {
+    option.text = "<select>";
+  }else{
+    option.text = months[i];
+  }
+  selectList.appendChild(option);
+}
+
+});
+
+    function onListOptionChange()
+    {
+    var opt = document.getElementById("monthList");
+    selected_month = opt.options[opt.selectedIndex].value;
+    $.post("/getMonthWiseData",{"data": months[selected_month]},function(data){
+
+    createWorldMap(months[selected_month]);
+    });
+    }
+
+      
+    function createBarChart(features,selected_month){
+      $.post("/getStats",{"id":features.id,"location":features.properties.name,"month":selected_month}, function(in_data){        
+         chart_data=drawBarChart(in_data, features.properties.name);
+         $('#text2').show()
+         $('#text2_0').html(features.properties.name);
+         $('#text2_2').html(chart_data[chart_data.length-1]['total_cases']);
+         $('#text2_4').html(chart_data[chart_data.length-1]['total_deaths']);
+
+        });      
+    }
+
+    function createPC(features,selected_month){
+      $.post("/getPCData",{"id":features.id,"location":features.properties.name,"month":selected_month},function(data){
+        drawPC(data);
+      }); 
+    }
+
+    </script>
+   
+    </head>
+<body style="background:black">
+  <nav>
+    <div class="nav-wrapper" style="background:#08519C;height:35px;width:100%;text-align:center;font-weight:bolder">
+      <div class="brand-logo" style="color:white;font-family:verdana;font-size:18px;">CSE564 Final Project: COVID'19 Visualization
+      <a style="float: right;margin-right:20px;color:white" href="data">Data</a></div>
+
+    </div>
+  </nav>
+
+    <div id="months"></div>
+
+  <div class='container-fluid '>
+    <div class="row">
+      <div class="" style="width:30%;padding-top:40px;padding-left:0px;">
+        <div id='barChart'></div>
+      </div>
+      <div class="" style="width:40%;padding-top:5px;">
+            <div id='worldMap'></div>
+    </div>
+    <div class="" style="width:30%;padding-top:5px;">
+     <div id="donut"></div>
+    </div>  
+
+  </div> 
+  <div class="row" > 
+      <!-- <div class="col-lg-3 " id='text1'> </div> -->
+        <div class="col-lg-9 " id='pcStats'> </div>
+        <div class="col-lg-3" style="text-align:center;margin-top:120px;">
+            <div id='text2' style="display:none;" >
+              <div id="text2_0" style="color: rgb(255, 255, 255);
+              stroke-width: 3;
+              font-size: 30px;
+              line-height: normal;"></div> </br>
+               <div id="text2_1" style="color: rgb(255, 255, 255);
+                  stroke-width: 2;
+                  font-size: 22px;
+                  line-height: normal;"> Total Confirmed Cases: </div>
+                <div id="text2_2" style="color: rgb(230, 0, 0);
+                    stroke-width: 2;
+                    font-size: 26px;
+                    text-align:center;
+                    line-height: normal;"></div></br>
+                <div id="text2_3" style="color: rgb(255, 255, 255);
+                    stroke-width: 2;
+                    font-size: 22px;
+                    line-height: normal;"> Total Deaths: </div>
+                <div id="text2_4" style="color: rgb(230, 0, 0);
+                      stroke-width: 2;
+                      font-size: 26px;
+                      text-align:center;
+                      line-height: normal;"></div>
+              </div>
+        </div> 
+</div>
+         
+</div>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <title>Visualization Final Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/styles/materialize.min.css">
+
+    <script src="{{ url_for('static', filename='js/d3.v4.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-2.2.4.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/queue.v1.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/d3-tip.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/topojson.v1.min.js')}}"></script>
+            
+    <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='styles/button.css')}}" />
+    <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='styles/main.css')}}" />
+    <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='styles/d3-tip.css')}}" />
+    <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='styles/parallel.css')}}" />
+
+  </head>
+  <body>
+      <nav>
+          <div class="nav-wrapper" style="background:  rgb(93, 115, 133)">
+            <a href="#" class="brand-logo">CSE564 Final Project: COVID'19 Visualization</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li><a href="dashboard">Dashboard</a></li>
+              <li><a href="data">Data</a></li>
+            </ul>
+          </div>
+        </nav>
+    <iframe width="90%" height="700px" style="margin-left:80px" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRQE0q5oDrd0ypE-Tm9ykDGgMiQnxCC9XRAW4YzbtUkrnbax4gt58jfze0mUSQt0bDuieKbtPsuRMEm/pubhtml?gid=741841521&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+
+    </body>
+</html>

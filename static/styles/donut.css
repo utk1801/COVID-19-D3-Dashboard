@@ -1,0 +1,35 @@
+/* body {
+    font-family: 'Roboto', sans-serif;
+    color: #333333;
+} */
+
+/* Add shadow effect to chart. If you don't like it, get rid of it. */
+svgdonut {
+    display: block;
+    -webkit-filter: drop-shadow( 0px 3px 3px rgba(255,255,255,.3) );
+    filter: drop-shadow( 0px 3px 3px rgba(255,255,255,.25) );
+}
+
+/*Styling for the lines connecting the labels to the slices*/
+polyline{
+    opacity: .3;
+    /* stroke: black; */
+    stroke: white;
+    stroke-width: 2px;
+    fill: none;
+}
+
+/* Make the percentage on the text labels bold*/
+.labelName tspan {
+    color:white;
+    font-style: normal;
+    font-weight: 600;
+    font-size: small;
+}
+
+/* In biology we generally italicise species names. */
+.labelName {
+    color: purple;
+    font-size: 0.9em;
+    font-style: italic;
+}
